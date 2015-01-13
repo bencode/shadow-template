@@ -9,7 +9,7 @@ shadow是一个支持组件化的nodejs模板引擎，它可以让开发者使�
 shadow的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](https://github.com/aui/artTemplate)。它只有几个必要的语句，学习成本非常低，运行效率却非常高，而且编译好的模板很方便调试。
 
 
-## 基础语法
+## 基本使用
 
 
 模板指令包含在`{{ }}`内
@@ -17,13 +17,13 @@ shadow的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](ht
 
 ### 输出
 
-```
+```html
 {{name}}
 ```
 
 默认情况下，会对结果进行html转义输出，如果需要原样输出，需要在前面加个等号：
 
-```
+```html
 {{=name}}
 ```
 
@@ -37,7 +37,7 @@ shadow的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](ht
 
 ### 判断
 
-```
+```html
 {{if offers.length === 0}}
   <div>empty</div>
 {{/if}}
@@ -45,7 +45,7 @@ shadow的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](ht
 
 可以有`else`或`else if`
 
-```
+```html
 {{if offers.length > 0}}
   <ul class="offers">
     ...
@@ -60,7 +60,7 @@ shadow的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](ht
 
 ### 循环
 
-```
+```html
 {{each offers as offer}}
   <li>
     {{offer.name}}
@@ -70,7 +70,7 @@ shadow的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](ht
 
 可以在模板中使用当前的循环序号
 
-```
+```html
 {{each offers as offer index}}
   <li>{{index}}. {{offer.name}}</li>
 {{/each}}
@@ -78,7 +78,7 @@ shadow的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](ht
 
 可以对对象类型进行迭代
 
-```
+```html
 {{each props as value name}}
   <dt>{{name}}{{name}}
   <dd>{{value}}</dd>
@@ -89,7 +89,7 @@ shadow的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](ht
 
 模板中不应该有业务逻辑，但有时候为了简化对象的引用需要使用一些赋值语句
 
-```
+```html
 {{! props = model.offer.props }}
 
 {{ props.name }}
@@ -102,7 +102,7 @@ shadow的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](ht
 
 带中划线的标签或首字母为大写的标签都会被引擎识别为组件
 
-```
+```html
 <x-panel>
   <heading>{{title}}</heading>
   <body>{{desc}}</body>
@@ -111,7 +111,7 @@ shadow的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](ht
 
 或
 
-```
+```html
 <Button text="confirm" />
 ```
 
@@ -121,12 +121,11 @@ shadow的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](ht
 
 可以这样定义bootstrap中的button
 
-```
+```html
 <button class="button button-{{type}}">{{children}}</button>
 ```
 
 组件中可以使用调用组件的属性以及上下文中的变量，可以类比于函数调用的参数和closure上下文中的变量。
-
 
 可以通过`children`变量访问子节点，可以通过`children.length`来判断是否有子节点
 
@@ -134,13 +133,13 @@ shadow的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](ht
 
 上述按扭组件可以这样使用：
 
-```
+```html
 <x-button type="default">confirm</x-button>
 ```
 
 以上调用会输出：
 
-```
+```html
 <button class="button button-default">confirm</button>
 ```
 
@@ -203,7 +202,7 @@ shadow的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](ht
 
 假设有`list`组件如下
 
-```
+```html
 <ul>
   {{each items as item}}
     <li>{{ children.toString({ item: item }) }}</li>
@@ -214,7 +213,7 @@ shadow的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](ht
 
 使用时
 
-```
+```html
 <div>
   <x-list items={{offers}}>
     <x-panel>
@@ -230,11 +229,11 @@ shadow的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](ht
 </div>
 ```
 
-上述x-panel中的`item`对象使用的是组件中传递的`item`参数，如果外围变量中也有item变量，外围变量将会被隐藏。
+上述x-panel中的`item`对象使用的是组件中传递的`item`参数，如果外围变量中也有`item`变量，外围变量将会被隐藏。
 
 这类似于函数参数变量和closure上下文中相同名称的变量，如果需要使用，则在组件调用前先保存成其他名称。
 
-```
+```html
 <div>
   {{! thisitem = item }}
 
