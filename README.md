@@ -131,7 +131,7 @@ shadow的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](ht
 
 可以通过`children`变量访问子节点，可以通过`children.length`来判断是否有子节点
 
-可以使用`{{children}}`输出所有children的内容，如果要传递参数，可以使用`{{children.toString({...})}}`
+可以使用`{{children}}`输出所有children的内容，如果要传递参数，可以使用`{{children({...})}}`
 
 上述按扭组件可以这样使用：
 
@@ -210,7 +210,7 @@ shadow的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](ht
 <shadow-component name="x-list">
   <ul>
     {{each items as item}}
-      <li>{{ children.toString({ item: item }) }}</li>
+      <li>{{ children({ item: item }) }}</li>
     {{/each}}
   </ul>
 </shadow-component>
