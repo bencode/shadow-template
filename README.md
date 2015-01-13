@@ -1,7 +1,7 @@
 shadow
 ====
 
-shadow是一个支持组件化的nodejs模板引擎，它可以让开发者使用自定义标签的方式来重用组件。
+shadow是一个支持组件化的javascript模板引擎，它可以让开发者使用自定义标签的方式来重用组件。
 
 
 ## 特性
@@ -122,7 +122,9 @@ shadow的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](ht
 可以这样定义bootstrap中的button
 
 ```html
-<button class="button button-{{type}}">{{children}}</button>
+<shadow-component name="x-button">
+  <button class="button button-{{type}}">{{children}}</button>
+</shadow-component>
 ```
 
 组件中可以使用调用组件的属性以及上下文中的变量，可以类比于函数调用的参数和closure上下文中的变量。
@@ -146,28 +148,30 @@ shadow的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](ht
 下面是一个定义bootstrap panel的例子
 
 ```html
-<div class="panel {{type}}">
-  {{if children.heading || children.title}}
-  <div class="panel-heading">
-    {{children.heading}}
-    {{if children.title}}
-    <div class="panel-title">{{children.title}}</div>
+<shadow-component name="x-panel">
+  <div class="panel {{type}}">
+    {{if children.heading || children.title}}
+    <div class="panel-heading">
+      {{children.heading}}
+      {{if children.title}}
+      <div class="panel-title">{{children.title}}</div>
+      {{/if}}
+    </div>
+    {{/if}}
+
+    {{if children.body}}
+    <div class="panel-body">
+      {{children.body}}
+    </div>
+    {{/if}}
+
+    {{if children.footer}}
+    <div class="panel-footer">
+      {{children.footer}}
+    </div>
     {{/if}}
   </div>
-  {{/if}}
-
-  {{if children.body}}
-  <div class="panel-body">
-    {{children.body}}
-  </div>
-  {{/if}}
-
-  {{if children.footer}}
-  <div class="panel-footer">
-    {{children.footer}}
-  </div>
-  {{/if}}
-</div>
+</shadow-component>
 ```
 
 使用`{{if children.title}}`来判断是否有title节点，使用`{{children.title}}`来输出title节点，如果需要传递参数，则使用函数调用语句`{{children.title({ item: item })}}`
@@ -203,12 +207,13 @@ shadow的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](ht
 假设有`list`组件如下
 
 ```html
-<ul>
-  {{each items as item}}
-    <li>{{ children.toString({ item: item }) }}</li>
-  {{/each}}
-</ul>
-
+<shadow-component name="x-list">
+  <ul>
+    {{each items as item}}
+      <li>{{ children.toString({ item: item }) }}</li>
+    {{/each}}
+  </ul>
+</shadow-component>
 ```
 
 使用时
@@ -236,7 +241,6 @@ shadow的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](ht
 ```html
 <div>
   {{! thisitem = item }}
-
   <x-list items="{{offers}}">
     <title>{{item.title}}</title>
     <body>
