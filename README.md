@@ -1,12 +1,13 @@
-shadow
+shadow-template
 ====
 
-shadow是一个支持组件化的javascript模板引擎，它可以让开发者使用自定义标签的方式来重用组件。
+shadow-template是一个支持组件化的javascript模板引擎，它可以让开发者使用自定义标签的方式来重用组件。
 
 
 ## 特性
 
-shadow的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](https://github.com/aui/artTemplate)。它只有几个必要的语句，学习成本非常低，运行效率却非常高，而且编译好的模板很方便调试。
+shadow-template的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](https://github.com/aui/artTemplate)。它只有几个必要的语句，学习成本非常低，运行效率却非常高，而且编译好的模板很方便调试。它支持在nodejs环境和浏览器环境。
+
 
 
 ## 基本使用
@@ -22,6 +23,7 @@ shadow的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](ht
 ```
 
 默认情况下，会对结果进行html转义输出，如果需要原样输出，需要在前面加个等号：
+
 
 ```html
 {{=name}}
@@ -99,6 +101,16 @@ shadow的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](ht
 
 熟悉了以上语法就可以编写模板代码了，但shadow的特点是允许以自定义标签的方式定义和使用组件，下面文档描述了如何定义和使用组件。
 
+### 注释
+
+```html
+{{// 这里是支持 }}
+
+{{//
+支持多行哦
+支持多行哦
+}}
+```
 
 ## 组件
 
@@ -121,22 +133,47 @@ shadow的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](ht
 
 ### 组件的定义
 
+在nodejs中可以将组件定义在单独的文件中，如button.html，然后使用API加载到渲染上下文中。
+在浏览器环境中，可以定义在`<script>`标标签中，引擎会自动加载的。
 
 可以这样定义bootstrap中的button
 
 ```html
-<shadow-component name="x-button">
-  <button class="button button-{{type}}">{{children}}</button>
-</shadow-component>
+<!-- in button.html -->
+<button class="button button-{{type}}">{{children}}</button>
 ```
+
+或者
+```
+<script type="text/shadow" name="x-button">
+  <button class="button button-{{type}}">{{children}}</button>
+</script>
+```
+
+也可以在一个统一片断中由`<shadow-element>`统一定义，这比较适合浏览器端公共库的定义。
+
+```
+<shadow-element name="x-button">
+  <button class="button button-{{type}}">{{children}}</button>
+</shadow-element>
+
+
+<shadow-element name="x-tabs">
+  <div ... />
+</shadow-element>
+```
+
+浏览器端使用时，可以加载编译好的js代码进行使用。
+
 
 组件中可以使用调用组件的属性以及上下文中的变量，可以类比于函数调用的参数和closure上下文中的变量。
 
 可以通过`children`变量访问子节点，可以通过`children.length`来判断是否有子节点
 
-可以使用`{{children}}`输出所有children的内容，如果要传递参数，可以使用`{{children({...})}}`
+可以使用`{{children}}`输出所有children的内容，如果要传递参数，可以使用`{{children({items: items})}}`
 
 上述按扭组件可以这样使用：
+
 
 ```html
 <x-button type="default">confirm</x-button>
@@ -151,30 +188,28 @@ shadow的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](ht
 下面是一个定义bootstrap panel的例子
 
 ```html
-<shadow-component name="x-panel">
-  <div class="panel {{type}}">
-    {{if children.heading || children.title}}
-    <div class="panel-heading">
-      {{children.heading}}
-      {{if children.title}}
-      <div class="panel-title">{{children.title}}</div>
-      {{/if}}
-    </div>
-    {{/if}}
-
-    {{if children.body}}
-    <div class="panel-body">
-      {{children.body}}
-    </div>
-    {{/if}}
-
-    {{if children.footer}}
-    <div class="panel-footer">
-      {{children.footer}}
-    </div>
+<div class="panel {{type}}">
+  {{if children.heading || children.title}}
+  <div class="panel-heading">
+    {{children.heading}}
+    {{if children.title}}
+    <div class="panel-title">{{children.title}}</div>
     {{/if}}
   </div>
-</shadow-component>
+  {{/if}}
+
+  {{if children.body}}
+  <div class="panel-body">
+    {{children.body}}
+  </div>
+  {{/if}}
+
+  {{if children.footer}}
+  <div class="panel-footer">
+    {{children.footer}}
+  </div>
+  {{/if}}
+</div>
 ```
 
 使用`{{if children.title}}`来判断是否有title节点，使用`{{children.title}}`来输出title节点，如果需要传递参数，则使用函数调用语句`{{children.title({ item: item })}}`
@@ -210,13 +245,11 @@ shadow的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](ht
 假设有`list`组件如下
 
 ```html
-<shadow-component name="x-list">
-  <ul>
-    {{each items as item}}
-      <li>{{ children({ item: item }) }}</li>
-    {{/each}}
-  </ul>
-</shadow-component>
+<ul>
+  {{each items as item}}
+    <li>{{ children({ item: item }) }}</li>
+  {{/each}}
+</ul>
 ```
 
 使用时
