@@ -1,6 +1,6 @@
 {
   "name": "shadow",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "支持组件化的javascript模板引擎，它可以让开发者使用自定义标签的方式来重用组件。",
   "main": "lib/index.js",
   "scripts": {
