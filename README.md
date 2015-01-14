@@ -352,7 +352,7 @@ document.getElementById('container').innerHTML = html;
 
 ```js
 var tpl = '<div ...>';
-var shadow.element('x-list', tpl);
+shadow.element('x-list', tpl);
 ```
 
 ## 定义指令
@@ -361,8 +361,9 @@ shadow-template可以扩展指令，本身内置的几个指令也是这样扩�
 
 扩展指令时会直接介入到编译流程。
 
+
 ```js
-shadow.directive('if', function() {
+shadow.directive('if', function(params, block) {
 
 });
 ```
