@@ -104,11 +104,11 @@ shadow-template的语法借鉴一个非常快速和简洁的模板引擎 [artTem
 ### 注释
 
 ```html
-{{// 这里是支持 }}
+{{// 这里是注释 }}
 
 {{//
-支持多行哦
-支持多行哦
+这里是注释，支持多行哦
+这里是注释，支持多行哦
 }}
 ```
 
@@ -286,3 +286,83 @@ shadow-template的语法借鉴一个非常快速和简洁的模板引擎 [artTem
 </div>
 ```
 
+## 使用
+
+### nodejs
+
+```
+npm install shadow-template
+```
+
+```js
+var shadow = require('shadow-template');
+
+// 加载组件
+// 一般来说会遍历整个目录进行加载
+shadow.element('x-tab', template)
+shadow.element('x-panel', template);
+...
+
+// 编译和渲染
+var render = shadow.compile(tpl);
+var html = render(context);
+...
+```
+
+### 浏览器
+
+首先需要在页面中引入shadow-template
+
+```html
+<script src="/path-to-shadow-template-lib/dist/shadow-template.min.js"></script>
+```
+
+可以在页面中直接定义组件
+
+```html
+<script type="text/shadow" name="x-tab">
+  ...
+</script>
+
+<script type="text/shadow" name="x-panel">
+  ...
+</script>
+```
+
+当然也可以直接引入编译好的组件
+
+```html
+<script src="/page-to-your-element"></script>
+```
+
+然后在js中就可以使用了
+
+```html
+<script type="text/javascript">
+
+var render = shadowTemplate.compile(tpl);
+var html = render(context);
+
+document.getElementById('container').innerHTML = html;
+
+</script>
+```
+
+也可以像nodejs使用一样通过api定义组件
+
+```js
+var tpl = '<div ...>';
+var shadow.element('x-list', tpl);
+```
+
+## 定义指令
+
+shadow-template可以扩展指令，本身内置的几个指令也是这样扩展上去的。
+
+扩展指令时会直接介入到编译流程。
+
+```js
+shadow.directive('if', function() {
+
+});
+```
