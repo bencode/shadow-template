@@ -1,0 +1,19 @@
+{
+  "name": "shadow",
+  "version": "0.0.1",
+  "description": "支持组件化的javascript模板引擎，它可以让开发者使用自定义标签的方式来重用组件。",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "mocha --require 'should' --reporter spec --recursive --bail --check-leaks test/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/carcons/shadow.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/carcons/shadow/issues"
+  },
+  "homepage": "https://github.com/carcons/shadow"
+}
