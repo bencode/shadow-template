@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/carcons/shadow-template.git"
+    "url": "git@github.com:bencode/shadow-template.git"
   },
   "author": "bencode@163.com",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/carcons/shadow-template/issues"
+    "url": "git@github.com:bencode/shadow-template/issues"
   },
-  "homepage": "https://github.com/carcons/shadow-template"
+  "homepage": "https://github.com/bencode/shadow-template/wiki"
 }
