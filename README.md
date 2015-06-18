@@ -106,6 +106,7 @@ shadow-template的语法借鉴一个非常快速和简洁的模板引擎 [artTem
 var name = model.offer.name
 var price = model.offer.price
 }}
+```
 
 
 熟悉了以上语法就可以编写模板代码了，但shadow的特点是允许以自定义标签的方式定义和使用组件，下面文档描述了如何定义和使用组件。
