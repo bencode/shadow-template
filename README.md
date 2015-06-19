@@ -6,7 +6,7 @@ shadow-template是一个支持组件化的javascript模板引擎，它可以让�
 
 ## 特性
 
-shadow-template的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](https://github.com/aui/artTemplate)。它只有几个必要的语句，学习成本非常低，运行效率却非常高，而且编译好的模板很方便调试。它支持在nodejs环境和浏览器环境。
+shadow-template的语法借鉴一个非常快速和简洁的模板引擎 [artTemplate](https://github.com/aui/artTemplate)。它只有几个必要的语句，学习成本非常低，运行效率却非常高，而且编译好的模板很方便调试。它支持在nodejs环境和浏览器环境下工作。
 
 
 
@@ -150,13 +150,13 @@ var price = model.offer.price
 
 ```html
 <!-- in button.html -->
-<button class="button button-{{type}}">{{children}}</button>
+<button class="button button-{{type}}">{{$children}}</button>
 ```
 
 或者
 ```
 <script type="text/shadow" name="x-button">
-  <button class="button button-{{type}}">{{children}}</button>
+  <button class="button button-{{type}}">{{$children}}</button>
 </script>
 ```
 
@@ -164,7 +164,7 @@ var price = model.offer.price
 
 ```
 <shadow-element name="x-button">
-  <button class="button button-{{type}}">{{children}}</button>
+  <button class="button button-{{type}}">{{$children}}</button>
 </shadow-element>
 
 
@@ -177,9 +177,9 @@ var price = model.offer.price
 
 组件中可以使用调用组件的属性以及上下文中的变量，可以类比于函数调用的参数和closure上下文中的变量。
 
-可以通过`children`变量访问子节点，可以通过`children.length`来判断是否有子节点
+可以通过`$children`变量访问子节点，可以通过`$children.length`来判断是否有子节点
 
-可以使用`{{children}}`输出所有children的内容，如果要传递参数，可以使用`{{children({items: items})}}`
+可以使用`{{$children}}`输出所有children的内容，如果要传递参数，可以使用`{{$children({items: items})}}`
 
 上述按扭组件可以这样使用：
 
@@ -198,30 +198,30 @@ var price = model.offer.price
 
 ```html
 <div class="panel {{type}}">
-  {{if children.heading || children.title}}
+  {{if $children.heading || $children.title}}
   <div class="panel-heading">
-    {{children.heading}}
-    {{if children.title}}
-    <div class="panel-title">{{children.title}}</div>
+    {{$children.heading}}
+    {{if $children.title}}
+    <div class="panel-title">{{$children.title}}</div>
     {{/if}}
   </div>
   {{/if}}
 
-  {{if children.body}}
+  {{if $children.body}}
   <div class="panel-body">
-    {{children.body}}
+    {{$children.body}}
   </div>
   {{/if}}
 
-  {{if children.footer}}
+  {{if $children.footer}}
   <div class="panel-footer">
-    {{children.footer}}
+    {{$children.footer}}
   </div>
   {{/if}}
 </div>
 ```
 
-使用`{{if children.title}}`来判断是否有title节点，使用`{{children.title}}`来输出title节点，如果需要传递参数，则使用函数调用语句`{{children.title({ item: item })}}`
+使用`{{if $children.title}}`来判断是否有title节点，使用`{{$children.title}}`来输出title节点，如果需要传递参数，则使用函数调用语句`{{$children.title({ item: item })}}`
 
 
 ### 组件的使用
@@ -256,7 +256,7 @@ var price = model.offer.price
 ```html
 <ul>
   {{each items as item}}
-    <li>{{ children({ item: item }) }}</li>
+    <li>{{ $children({ item: item }) }}</li>
   {{/each}}
 </ul>
 ```
