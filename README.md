@@ -143,7 +143,7 @@ var price = model.offer.price
 
 ### 组件的定义
 
-在nodejs中可以将组件定义在单独的文件中，如button.html，然后使用API加载到渲染上下文中。
+在nodejs中可以将组件定义在单独的文件中，如button.tpl，然后使用API加载到渲染上下文中。
 在浏览器环境中，可以定义在`<script>`标标签中，引擎会自动加载的。
 
 可以这样定义bootstrap中的button
@@ -190,7 +190,7 @@ var price = model.offer.price
 
 以上调用会输出：
 
-```html
+```html 
 <button class="button button-default">confirm</button>
 ```
 
