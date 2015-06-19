@@ -372,7 +372,18 @@ shadow-template可以扩展指令，本身内置的几个指令也是这样扩�
 
 
 ```js
-shadow.directive('if', function(params, block) {
+shadow.directive('if', function(conditional, options) {
+    if (conditional) {
+        return options.fn();
+    } else {
+        return options.inverse();
+    }
 
+    inject private variables
+
+    // options.hash   指令hash，比如{{each items as item index}}
+    // hash -> { item: undefined, index: undefined }
+
+    // options.data  上下文数据
 });
 ```
