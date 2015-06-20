@@ -379,8 +379,6 @@ shadow.directive('if', function(conditional, options) {
         return options.inverse();
     }
 
-    inject private variables
-
     // options.hash   指令hash，比如{{each items as item index}}
     // hash -> { item: undefined, index: undefined }
 
