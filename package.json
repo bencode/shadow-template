@@ -4,7 +4,17 @@
   "description": "支持组件化的javascript模板引擎，它可以让开发者使用自定义标签的方式来重用组件。",
   "main": "lib/index.js",
   "scripts": {
-    "test": "mocha --require 'should' --reporter spec --recursive --bail --check-leaks test/"
+    "jshint": "node ./node_modules/.bin/jshint lib test",
+    "test": "node ./node_modules/.bin/_mocha --harmony --require 'should' --reporter spec --recursive --bail --check-leaks test/",
+    "test-cov": "node --harmony ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- -u exports --require 'should' --recursive --bail --check-leaks test/",
+    "test-travis": "node --harmony ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --report lcovonly -- -u exports --require 'should' --recursive --bail --check-leaks test/",
+    "all": "npm run jshint && npm run test && npm run test-cov"
+  },
+  "devDependencies": {
+    "jshint": "~2.8.0",
+    "mocha": "~2.2.5",
+    "should": "~6.0.3",
+    "istanbul-for-harmony": "^0.3.11"
   },
   "repository": {
     "type": "git",
@@ -12,8 +22,5 @@
   },
   "author": "bencode@163.com",
   "license": "ISC",
-  "bugs": {
-    "url": "git@github.com:bencode/shadow-template/issues"
-  },
   "homepage": "https://github.com/bencode/shadow-template/wiki"
 }
